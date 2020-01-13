@@ -99,10 +99,9 @@ static esp_err_t event_handler(void *ctx, system_event_t *event)
 	    case SYSTEM_EVENT_ETH_STOP:   			printf("SYSTEM_EVENT_ETH_STOP\r\n");	break;              /**< ESP32 ethernet stop */
 	    case SYSTEM_EVENT_ETH_CONNECTED:    	printf("SYSTEM_EVENT_ETH_CONNECTED\r\n");	break;			/**< ESP32 ethernet phy link up */
 	    case SYSTEM_EVENT_ETH_DISCONNECTED:		printf("SYSTEM_EVENT_ETH_DISCONNECTED\r\n");	break;      /**< ESP32 ethernet phy link down */
-			case SYSTEM_EVENT_ETH_GOT_IP: 		printf("SYSTEM_EVENT_ETH_GOT_IP\r\n");	break;				/**< ESP32 ethernet got IP from connected AP */
-			case SYSTEM_EVENT_MAX:				printf("SYSTEM_EVENT_MAX\r\n");	break;
-			
-			default:							printf("SYSTEM_EVENT_ OTHER\r\n");	break;
+		case SYSTEM_EVENT_ETH_GOT_IP: 			printf("SYSTEM_EVENT_ETH_GOT_IP\r\n");	break;				/**< ESP32 ethernet got IP from connected AP */
+		case SYSTEM_EVENT_MAX:					printf("SYSTEM_EVENT_MAX\r\n");	break;
+		default:								printf("SYSTEM_EVENT_ OTHER\r\n");	break;
 	}
 	
 	return ESP_OK;

@@ -10,12 +10,10 @@
 // Embedded Files. To add or remove make changes is component.mk file as well. 
 extern const uint8_t index_html_start[] asm("_binary_index_html_start");
 extern const uint8_t index_html_end[]   asm("_binary_index_html_end");
-
 extern const uint8_t favicon_ico_start[] asm("_binary_favicon_ico_start");
 extern const uint8_t favicon_ico_end[]   asm("_binary_favicon_ico_end");
-
-extern const uint8_t jquery_3_3_1_min_js_start[] asm("_binary_jquery_3_3_1_min_js_start");
-extern const uint8_t jquery_3_3_1_min_js_end[]   asm("_binary_jquery_3_3_1_min_js_end");
+extern const uint8_t jquery_3_4_1_min_js_start[] asm("_binary_jquery_3_4_1_min_js_start");
+extern const uint8_t jquery_3_4_1_min_js_end[]   asm("_binary_jquery_3_4_1_min_js_end");
 
 
 httpd_handle_t OTA_server = NULL;
@@ -84,13 +82,13 @@ esp_err_t OTA_favicon_ico_handler(httpd_req_t *req)
 	return ESP_OK;
 }
 /* jquery GET handler */
-esp_err_t jquery_3_3_1_min_js_handler(httpd_req_t *req)
+esp_err_t jquery_3_4_1_min_js_handler(httpd_req_t *req)
 {
 	ESP_LOGI("OTA", "jqueryMinJs Requested");
 
 	httpd_resp_set_type(req, "application/javascript");
 
-	httpd_resp_send(req, (const char *)jquery_3_3_1_min_js_start, jquery_3_3_1_min_js_end - jquery_3_3_1_min_js_start);
+	httpd_resp_send(req, (const char *)jquery_3_4_1_min_js_start, (jquery_3_4_1_min_js_end - jquery_3_4_1_min_js_start)-1);
 
 	return ESP_OK;
 }
@@ -101,12 +99,12 @@ esp_err_t OTA_update_status_handler(httpd_req_t *req)
 	char ledJSON[100];
 	
 	ESP_LOGI("OTA", "Status Requested");
-
-	sprintf(ledJSON, "{\"status\":%d,\"compile_time\":\"%s\",\"compile_date\":\"%s\"}", flash_status, __TIME__, __DATE__);
 	
+	sprintf(ledJSON, "{\"status\":%d,\"compile_time\":\"%s\",\"compile_date\":\"%s\"}", flash_status, __TIME__, __DATE__);
 	httpd_resp_set_type(req, "application/json");
 	httpd_resp_send(req, ledJSON, strlen(ledJSON));
 	
+	// This gets set when upload is complete
 	if (flash_status == 1)
 	{
 		// We cannot directly call reboot here because we need the 
@@ -238,10 +236,10 @@ httpd_uri_t OTA_favicon_ico = {
 	 * context to demonstrate it's usage */
 	.user_ctx = NULL
 };
-httpd_uri_t OTA_jquery_3_3_1_min_js = {
-	.uri = "/jquery-3.3.1.min.js",
+httpd_uri_t OTA_jquery_3_4_1_min_js = {
+	.uri = "/jquery-3.4.1.min.js",
 	.method = HTTP_GET,
-	.handler = jquery_3_3_1_min_js_handler,
+	.handler = jquery_3_4_1_min_js_handler,
 	/* Let's pass response string in user
 	 * context to demonstrate it's usage */
 	.user_ctx = NULL
@@ -265,9 +263,6 @@ httpd_handle_t start_OTA_webserver(void)
 {
 	httpd_config_t config = HTTPD_DEFAULT_CONFIG();
 	
-	// Need this task to spin up, see why in task
-	xTaskCreate(&systemRebootTask, "rebootTask", 2048, NULL, 5, NULL);
-	
 	// Lets change this from port 80 (default) to 8080
 	//config.server_port = 8080;
 	
@@ -285,7 +280,7 @@ httpd_handle_t start_OTA_webserver(void)
 		ESP_LOGI("OTA", "Registering URI handlers");
 		httpd_register_uri_handler(OTA_server, &OTA_index_html);
 		httpd_register_uri_handler(OTA_server, &OTA_favicon_ico);
-		httpd_register_uri_handler(OTA_server, &OTA_jquery_3_3_1_min_js);
+		httpd_register_uri_handler(OTA_server, &OTA_jquery_3_4_1_min_js);
 		httpd_register_uri_handler(OTA_server, &OTA_update);
 		httpd_register_uri_handler(OTA_server, &OTA_status);
 		return OTA_server;

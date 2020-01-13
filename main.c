@@ -31,12 +31,16 @@ void app_main()
 	printf(" ");
 	printf(__DATE__);
 	printf("\r\n");
+	
+	
+	// Need this task to spin up, see why in task
+	xTaskCreate(&systemRebootTask, "rebootTask", 2048, NULL, 5, NULL);
+
 
 	// Start as an AP
 	//init_wifi_softap(&OTA_server);
 	
 	// Connect to a Router so as to give a quick test
 	init_wifi_station(&OTA_server);
-	
 
 }
