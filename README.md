@@ -1,6 +1,6 @@
 # ESP32-OTA-Webserver
 
-I wanted to have a way to upload new firmware OTA by having the ESP32 act as a AP and serve up a web page to which I could upload a new .bin file. This is what this code does. 
+I wanted to have a way to upload new firmware OTA by having the ESP32 act as a AP and serve up a web page to which I could upload a new .bin file. This is what this code does. This was built with Cmake using ESP-IDF 3.3.1
 
 In main.c you can choose to connect to a router or act as a AP. 
 For testing it's faster to just connect to your router and use the browser on your PC to point to its IP and upload your .bin file. 
