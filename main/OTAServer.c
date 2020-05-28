@@ -163,7 +163,7 @@ esp_err_t OTA_update_post_handler(httpd_req_t *req)
 			esp_err_t err = esp_ota_begin(update_partition, OTA_SIZE_UNKNOWN, &ota_handle);
 			if (err != ESP_OK)
 			{
-				printf("Error With OTA Begin, Cancelling OTA\r\n");
+				printf("Error With OTA Begin, Cancelling OTA %x\r\n", err);
 				return ESP_FAIL;
 			}
 			else

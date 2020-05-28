@@ -38,9 +38,9 @@ void app_main()
 
 
 	// Start as an AP
-	//init_wifi_softap(&OTA_server);
+	init_wifi_softap(&OTA_server);
 	
 	// Connect to a Router so as to give a quick test
-	init_wifi_station(&OTA_server);
+	//init_wifi_station(&OTA_server);
 
 }

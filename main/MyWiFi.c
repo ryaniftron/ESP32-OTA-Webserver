@@ -192,7 +192,7 @@ void init_wifi_softap(void *arg)
 {
 	esp_log_level_set("wifi", ESP_LOG_NONE);    // disable wifi driver logging
 	
-	start_dhcp_server();
+	//start_dhcp_server();
 	
 	wifi_event_group = xEventGroupCreate();
 	
